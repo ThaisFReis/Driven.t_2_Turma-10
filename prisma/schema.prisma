@@ -23,7 +23,7 @@ model User {
 model Session {
   id        Int      @id @default(autoincrement())
   userId    Int
-  User      User     @relation(fields: [userId], references: [id])
+  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   token     String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -47,7 +47,7 @@ model Enrollment {
   birthday  DateTime
   phone     String    @db.VarChar(255)
   userId    Int       @unique
-  User      User      @relation(fields: [userId], references: [id])
+  User      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   Address   Address[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
@@ -64,7 +64,7 @@ model Address {
   neighborhood  String     @db.VarChar(255)
   addressDetail String?    @db.VarChar(255)
   enrollmentId  Int        @unique
-  Enrollment    Enrollment @relation(fields: [enrollmentId], references: [id])
+  Enrollment    Enrollment @relation(fields: [enrollmentId], references: [id], onDelete: Cascade)
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
 }
@@ -83,9 +83,9 @@ model TicketType {
 model Ticket {
   id           Int          @id @default(autoincrement())
   ticketTypeId Int
-  TicketType   TicketType   @relation(fields: [ticketTypeId], references: [id])
+  TicketType   TicketType   @relation(fields: [ticketTypeId], references: [id], onDelete: Cascade)
   enrollmentId Int
-  Enrollment   Enrollment   @relation(fields: [enrollmentId], references: [id])
+  Enrollment   Enrollment   @relation(fields: [enrollmentId], references: [id], onDelete: Cascade)
   status       TicketStatus
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
@@ -100,7 +100,7 @@ enum TicketStatus {
 model Payment {
   id             Int      @id @default(autoincrement())
   ticketId       Int
-  Ticket         Ticket   @relation(fields: [ticketId], references: [id])
+  Ticket         Ticket   @relation(fields: [ticketId], references: [id], onDelete: Cascade)
   value          Int
   cardIssuer     String
   cardLastDigits String
